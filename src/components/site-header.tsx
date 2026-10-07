@@ -3,30 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { navLinks, site } from "@/lib/site";
 import { ButtonLink } from "@/components/button-link";
 import { Container } from "@/components/container";
+import { SiteLogo } from "@/components/site-logo";
+import { navLinks } from "@/lib/site";
 import { cn } from "@/lib/utils";
-
-function LogoMark() {
-  return (
-    <span
-      className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg border border-border bg-surface-muted"
-      aria-hidden
-    >
-      <span className="absolute inset-0 bg-gradient-to-br from-accent-bright/40 via-violet/30 to-cyan/20" />
-      <svg className="relative z-10" width="20" height="20" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M6 18L12 4l6 14H6z"
-          stroke="#e2e8f0"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
-        <path d="M9 14h6" stroke="#22d3ee" strokeWidth="1.5" />
-      </svg>
-    </span>
-  );
-}
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -36,13 +17,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
       <Container>
         <div className="flex h-16 items-center justify-between gap-4 lg:grid lg:grid-cols-[1fr_auto_1fr]">
-          <Link
-            href="/"
-            className="flex items-center gap-2.5 font-semibold tracking-tight text-foreground"
-          >
-            <LogoMark />
-            <span className="hidden sm:inline">{site.name}</span>
-          </Link>
+          <SiteLogo priority />
 
           <nav
             className="hidden items-center justify-center gap-8 lg:flex"

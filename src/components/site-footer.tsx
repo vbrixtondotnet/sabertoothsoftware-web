@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { navLinks, site } from "@/lib/site";
 import { Container } from "@/components/container";
+import { SiteLogo } from "@/components/site-logo";
+import { navLinks, site } from "@/lib/site";
 
 export function SiteFooter() {
   return (
@@ -8,12 +9,7 @@ export function SiteFooter() {
       <Container className="py-12">
         <div className="grid gap-10 md:grid-cols-[1.2fr_1fr]">
           <div>
-            <div className="flex items-center gap-2.5 font-semibold text-foreground">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-gradient-to-br from-accent/30 to-violet/20 text-sm font-bold">
-                ST
-              </span>
-              {site.name}
-            </div>
+            <SiteLogo showWordmark={false} />
             <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">
               {site.description}
             </p>
