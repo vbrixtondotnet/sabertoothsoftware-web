@@ -105,7 +105,7 @@ export const services: Service[] = [
 export const projects: Project[] = [
   {
     slug: "contractorsbook-platform",
-    title: "ContractorsBook-style job hub",
+    title: "ContractorsBook",
     clientType: "Regional general contractor",
     industry: "Construction",
     stack: [".NET 10", "MS SQL Server", "Next.js", "React Native"],
@@ -115,7 +115,7 @@ export const projects: Project[] = [
   },
   {
     slug: "commercial-precon-suite",
-    title: "Commercial preconstruction suite",
+    title: "Builders Desk",
     clientType: "Commercial GC",
     industry: "Construction",
     stack: ["Next.js", "TypeScript", "Prisma", "Cloudflare"],
@@ -125,7 +125,7 @@ export const projects: Project[] = [
   },
   {
     slug: "midmarket-distribution-erp",
-    title: "Mid-market distribution ERP",
+    title: "Enterprise Flow",
     clientType: "200-employee wholesale distributor",
     industry: "Distribution & light manufacturing",
     stack: [".NET 10", "MS SQL Server", "Next.js", "Redis"],
@@ -135,7 +135,7 @@ export const projects: Project[] = [
   },
   {
     slug: "production-builder-portal",
-    title: "Production homebuilder portal",
+    title: "Homebuilder Portal",
     clientType: "Production homebuilder",
     industry: "Construction",
     stack: [".NET 10", "MS SQL Server", "Next.js", "Azure"],
@@ -144,7 +144,7 @@ export const projects: Project[] = [
   },
   {
     slug: "make-to-order-manufacturing-erp",
-    title: "Make-to-order manufacturing ERP",
+      title: "Manufacturing Hub",
     clientType: "150-employee metal fabricator",
     industry: "Discrete manufacturing",
     stack: [".NET 10", "MS SQL Server", "Next.js", "Redis"],
@@ -153,7 +153,7 @@ export const projects: Project[] = [
   },
   {
     slug: "professional-services-erp",
-    title: "Professional services ERP",
+      title: "Factory Central",
     clientType: "Mid-sized engineering & design firm",
     industry: "Professional services",
     stack: [".NET 10", "MS SQL Server", "Next.js", "Power BI"],

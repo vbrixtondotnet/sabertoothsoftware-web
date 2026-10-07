@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ContentImage } from "@/components/content-image";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/page-hero";
-import { PageVisualHero } from "@/components/page-visual-hero";
 import { projects } from "@/lib/content";
 import { pageImages, projectImages } from "@/lib/images";
 
@@ -20,10 +19,6 @@ export default function ProjectsPage() {
         eyebrow="Projects"
         title="Work we’re proud to put our name on"
         description="A sample of product builds, platforms, and internal tools. Client names are anonymized where required; outcomes are real."
-      />
-      <PageVisualHero
-        src={pageImages.projectsHero}
-        alt="Analytics dashboard on a monitor representing data-driven software products"
       />
       <section className="py-16 md:py-20">
         <Container>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/button-link";
-import { ContentImage } from "@/components/content-image";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/page-hero";
 import { PageVisualHero } from "@/components/page-visual-hero";
@@ -45,7 +44,7 @@ export default function AboutPage() {
       />
       <PageVisualHero
         src={pageImages.aboutHero}
-        alt="Engineering team collaborating around a table in a modern office"
+        alt="Five software developers in a modern office with laptops and monitors in the background"
       />
       <section className="py-16 md:py-20">
         <Container className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
@@ -72,11 +71,6 @@ export default function AboutPage() {
               the first internal hire. Sabertooth exists to be the team you recommend
               when the stakes are high.
             </p>
-            <ContentImage
-              src={pageImages.aboutTeam}
-              alt="Colleagues reviewing designs and code together on a large display"
-              className="mt-8"
-            />
           </div>
           <div className="glass-panel rounded-2xl p-8">
             <h2 className="font-display text-2xl font-medium">How we engage</h2>
