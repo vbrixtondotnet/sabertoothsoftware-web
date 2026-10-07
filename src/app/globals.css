@@ -1,26 +1,176 @@
 @import "tailwindcss";
 
+/* Midnight Tech — dark navy, electric blue, violet/cyan accents */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #04060c;
+  --background-deep: #020308;
+  --foreground: #f1f5f9;
+  --muted: #8b9cb8;
+  --border: rgba(148, 163, 184, 0.14);
+  --accent: #2563eb;
+  --accent-bright: #3b82f6;
+  --accent-foreground: #ffffff;
+  --violet: #8b5cf6;
+  --cyan: #22d3ee;
+  --surface-elevated: rgba(12, 18, 34, 0.85);
+  --surface-muted: rgba(15, 23, 42, 0.55);
+  --glow-blue: rgba(37, 99, 235, 0.45);
+  --glow-violet: rgba(139, 92, 246, 0.35);
+  --glow-cyan: rgba(34, 211, 238, 0.25);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-violet: var(--violet);
+  --color-cyan: var(--cyan);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-muted: var(--surface-muted);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-fraunces);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  background-color: var(--background-deep);
+  background-image:
+    radial-gradient(ellipse 90% 70% at 50% -15%, var(--glow-blue), transparent 55%),
+    radial-gradient(ellipse 45% 40% at 0% 40%, var(--glow-violet), transparent 50%),
+    radial-gradient(ellipse 50% 45% at 100% 75%, var(--glow-cyan), transparent 45%),
+    linear-gradient(180deg, var(--background) 0%, var(--background-deep) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.35);
+  color: #fff;
+}
+
+.font-display-italic {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.prose-block h2 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.midnight-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.midnight-glow::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 0%, rgba(37, 99, 235, 0.22), transparent 60%),
+    radial-gradient(ellipse 40% 35% at 85% 25%, rgba(139, 92, 246, 0.15), transparent 55%);
+}
+
+.gradient-mesh {
+  position: relative;
+}
+
+.gradient-mesh::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  bottom: -120px;
+  left: 50%;
+  translate: -50% 0;
+  width: min(900px, 100%);
+  height: 280px;
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 100%,
+    rgba(34, 211, 238, 0.12),
+    rgba(37, 99, 235, 0.08) 40%,
+    transparent 70%
+  );
+  filter: blur(2px);
+}
+
+.card-hover {
+  transition:
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.card-hover:hover {
+  border-color: rgba(59, 130, 246, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.12),
+    0 16px 48px rgba(0, 0, 0, 0.45),
+    0 0 40px rgba(37, 99, 235, 0.08);
+  transform: translateY(-2px);
+}
+
+.glass-panel {
+  border: 1px solid var(--border);
+  background: var(--surface-elevated);
+  backdrop-filter: blur(16px);
+}
+
+.link-glow {
+  color: var(--cyan);
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.link-glow:hover {
+  color: #67e8f9;
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.35);
+}
+
+.badge-new {
+  background: linear-gradient(135deg, var(--accent-bright), #1d4ed8);
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.5);
+}
+
+.online-dot {
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
+}
+
+.input-dark {
+  background: rgba(4, 6, 12, 0.6);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+}
+
+.input-dark::placeholder {
+  color: var(--muted);
+}
+
+.input-dark:focus {
+  outline: none;
+  border-color: rgba(59, 130, 246, 0.55);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.cta-glow-box {
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37, 99, 235, 0.15), transparent),
+    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(139, 92, 246, 0.1), transparent),
+    var(--surface-elevated);
+  backdrop-filter: blur(12px);
 }
