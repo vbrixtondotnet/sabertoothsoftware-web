@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { ButtonLink } from "@/components/button-link";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/page-hero";
-import { PageVisualHero } from "@/components/page-visual-hero";
-import { pageImages } from "@/lib/images";
+import { AboutTeamHero } from "@/components/about-team-hero";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -38,14 +37,12 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
+        compact
         eyebrow="About"
         title="A focused studio for serious software"
         description={`${site.name} helps US organizations turn complex requirements into reliable products—without the overhead of a large consultancy or the opacity of a low-cost offshore shop.`}
       />
-      <PageVisualHero
-        src={pageImages.aboutHero}
-        alt="Five software developers in a modern office with laptops and monitors in the background"
-      />
+      <AboutTeamHero alt="Remote team collage: senior developer, junior developer, mid developer, and US project manager working from home" />
       <section className="py-16 md:py-20">
         <Container className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
           <div>

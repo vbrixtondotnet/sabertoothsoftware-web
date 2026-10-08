@@ -166,6 +166,29 @@ body {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
+/* About team collage — identical sizing in dev and static export */
+.about-team-photo {
+  display: block;
+  width: min(100%, 20rem);
+  max-width: 20rem;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .about-team-photo {
+    width: min(100%, 24rem);
+    max-width: 24rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .about-team-photo {
+    width: min(100%, 28rem);
+    max-width: 28rem;
+  }
+}
+
 .cta-glow-box {
   border: 1px solid rgba(59, 130, 246, 0.25);
   background:

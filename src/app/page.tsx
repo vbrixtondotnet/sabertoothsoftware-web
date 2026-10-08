@@ -15,7 +15,7 @@ export default function HomePage() {
         <Container className="py-16 text-center md:py-24 lg:py-28">
           <div className="mx-auto flex max-w-3xl flex-col items-center">
             <Link
-              href="/case-studies/contractorsbook-platform"
+              href="/projects"
               className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-border bg-surface-muted/90 px-2 py-1.5 text-sm text-muted backdrop-blur-sm transition hover:border-accent-bright/30"
             >
               <span className="badge-new rounded-md px-2 py-0.5 text-xs font-bold text-white">

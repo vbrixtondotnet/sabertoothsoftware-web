@@ -7,6 +7,8 @@ type ContentImageProps = {
   className?: string;
   priority?: boolean;
   aspect?: "video" | "wide" | "square";
+  fit?: "cover" | "contain";
+  overlay?: boolean;
 };
 
 const aspectClass = {
@@ -21,6 +23,8 @@ export function ContentImage({
   className,
   priority,
   aspect = "video",
+  fit = "cover",
+  overlay = true,
 }: ContentImageProps) {
   return (
     <div
@@ -36,16 +40,20 @@ export function ContentImage({
         fill
         priority={priority}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        className="object-cover"
+        className={fit === "contain" ? "object-contain p-0.5" : "object-cover"}
       />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-violet/10 mix-blend-soft-light"
-        aria-hidden
-      />
+      {overlay && (
+        <>
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-violet/10 mix-blend-soft-light"
+            aria-hidden
+          />
+        </>
+      )}
     </div>
   );
 }
