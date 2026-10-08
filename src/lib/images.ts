@@ -2,7 +2,7 @@
 export const pageImages = {
   servicesHero: "/images/services-hero.jpg",
   projectsHero: "/images/projects-hero.jpg",
-  aboutHero: "/images/team.png",
+  aboutHero: "/images/team-v3.jpg",
   aboutTeam: "/images/about-team.jpg",
   homeHero: "/images/home/hero-software-dev.jpg",
   homeCapabilities: "/images/home/capabilities-team.jpg",

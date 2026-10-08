@@ -27,6 +27,11 @@ export function SiteFooter() {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/careers" className="text-muted hover:text-cyan">
+                    Careers
+                  </Link>
+                </li>
+                <li>
                   <Link href="/contact" className="text-muted hover:text-cyan">
                     Contact
                   </Link>
