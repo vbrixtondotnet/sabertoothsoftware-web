@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ContactForm } from "@/components/contact-form";
 import { Container } from "@/components/container";
 import { PageHero } from "@/components/page-hero";
 import { site } from "@/lib/site";
@@ -21,68 +22,9 @@ export default function ContactPage() {
           <div className="glass-panel rounded-2xl p-8 md:p-10">
             <h2 className="text-lg font-semibold">Send a message</h2>
             <p className="mt-2 text-sm text-muted">
-              This form is a layout placeholder—wire it to your email provider or CRM
-              when you&apos;re ready to go live.
+              Tell us about your project and we&apos;ll route your inquiry to our team.
             </p>
-            <form className="mt-8 space-y-5" action={`mailto:${site.email}`} method="get">
-              <div>
-                <label htmlFor="name" className="text-sm font-medium">
-                  Name
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  className="input-dark mt-1.5 w-full rounded-lg px-3 py-2.5 text-sm"
-                  placeholder="Jane Smith"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="text-sm font-medium">
-                  Work email
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  className="input-dark mt-1.5 w-full rounded-lg px-3 py-2.5 text-sm"
-                  placeholder="jane@company.com"
-                />
-              </div>
-              <div>
-                <label htmlFor="company" className="text-sm font-medium">
-                  Company
-                </label>
-                <input
-                  id="company"
-                  name="company"
-                  type="text"
-                  className="input-dark mt-1.5 w-full rounded-lg px-3 py-2.5 text-sm"
-                  placeholder="Acme Inc."
-                />
-              </div>
-              <div>
-                <label htmlFor="body" className="text-sm font-medium">
-                  Project overview
-                </label>
-                <textarea
-                  id="body"
-                  name="body"
-                  rows={5}
-                  required
-                  className="input-dark mt-1.5 w-full resize-y rounded-lg px-3 py-2.5 text-sm"
-                  placeholder="Goals, timeline, and any technical context..."
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-[0_0_24px_rgba(37,99,235,0.45)] transition hover:bg-accent-bright"
-              >
-                Open email draft
-              </button>
-            </form>
+            <ContactForm />
           </div>
 
           <div className="space-y-8">

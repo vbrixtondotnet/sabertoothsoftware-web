@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "setup:email": "node scripts/sync-email-env.mjs",
+    "dev": "node scripts/sync-email-env.mjs && concurrently -k -n next,api \"next dev\" \"wrangler pages dev out --port 8788\"",
+    "dev:web": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "npm run build && wrangler pages deploy out --project-name=sabertooth-software-labs --branch=main --commit-dirty=true"
+    "deploy": "npm run build && wrangler pages deploy out --project-name=sabertooth-software-labs --branch=main --commit-dirty=true",
+    "pages:dev": "npm run build && wrangler pages dev out --port 8788"
   },
   "dependencies": {
     "next": "16.3.6",
@@ -15,11 +18,13 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261009.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
+    "concurrently": "^9.2.1",
     "eslint-config-next": "16.3.6",
     "tailwindcss": "^4",
     "typescript": "^5",
