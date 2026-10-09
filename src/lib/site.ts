@@ -3,7 +3,8 @@ export const site = {
   tagline: "Custom software development for US companies",
   description:
     "Sabertooth Software Labs designs and builds production-grade web applications, APIs, and cloud systems for US startups and enterprises.",
-  email: "hello@sabertoothsoftwarelabs.com",
+  email: "sales@sabertoothsoftwarelabs.com",
+  careersEmail: "hr@sabertoothsoftwarelabs.com",
   location: "Remote · US time-zone overlap",
 } as const;
 

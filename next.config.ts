@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         source: "/api/contact",
         destination: "http://127.0.0.1:8788/api/contact",
       },
+      {
+        source: "/api/careers/apply",
+        destination: "http://127.0.0.1:8788/api/careers/apply",
+      },
     ];
   },
 };

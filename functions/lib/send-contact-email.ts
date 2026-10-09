@@ -1,3 +1,10 @@
+export type EmailAttachment = {
+  filename: string;
+  content: string;
+  type: string;
+  disposition: "attachment";
+};
+
 export type OutboundContactEmail = {
   to: string;
   from: string;
@@ -5,6 +12,7 @@ export type OutboundContactEmail = {
   subject: string;
   text: string;
   html: string;
+  attachments?: EmailAttachment[];
 };
 
 export type ContactMailEnv = {
@@ -63,6 +71,7 @@ async function sendViaRestApi(
         subject: message.subject,
         html: message.html,
         text: message.text,
+        ...(message.attachments?.length ? { attachments: message.attachments } : {}),
       }),
     },
   );

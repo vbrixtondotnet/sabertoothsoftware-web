@@ -33,11 +33,11 @@ export default function CareersPage() {
               ahead of formal postings for strong .NET and web engineers.
             </p>
             <ButtonLink
-              href={`mailto:${site.email}?subject=${encodeURIComponent("General application — Sabertooth Software Labs")}`}
+              href={`mailto:${site.careersEmail}?subject=${encodeURIComponent("General application — Sabertooth Software Labs")}`}
               className="mt-6"
               variant="secondary"
             >
-              Email {site.email}
+              Email {site.careersEmail}
             </ButtonLink>
           </div>
         </Container>

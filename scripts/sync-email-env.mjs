@@ -65,6 +65,8 @@ if (!merged.CLOUDFLARE_EMAIL_API_TOKEN?.trim()) {
 
 merged.FROM_EMAIL = merged.FROM_EMAIL || "sales@sabertoothsoftwarelabs.net";
 merged.CONTACT_EMAIL = merged.CONTACT_EMAIL || "vbrixtondotnet@gmail.com";
+merged.CAREERS_EMAIL =
+  merged.CAREERS_EMAIL || "hr@sabertoothsoftwarelabs.com";
 
 const body =
   Object.entries(merged)
@@ -77,6 +79,7 @@ if (fs.existsSync(localPath)) {
   local.CLOUDFLARE_ACCOUNT_ID = ACCOUNT_ID;
   if (!local.FROM_EMAIL) local.FROM_EMAIL = merged.FROM_EMAIL;
   if (!local.CONTACT_EMAIL) local.CONTACT_EMAIL = merged.CONTACT_EMAIL;
+  if (!local.CAREERS_EMAIL) local.CAREERS_EMAIL = merged.CAREERS_EMAIL;
   const localBody =
     Object.entries(local)
       .filter(([k]) => k !== "CLOUDFLARE_EMAIL_API_TOKEN")

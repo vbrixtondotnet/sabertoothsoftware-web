@@ -323,3 +323,7 @@ export const jobListings: JobListing[] = [
     ],
   ),
 ];
+
+export function getJobBySlug(slug: string): JobListing | undefined {
+  return jobListings.find((job) => job.slug === slug);
+}

@@ -208,7 +208,7 @@ export function ContactForm() {
         </div>
         <div>
           <label htmlFor={`${formId}-body`} className="text-sm font-medium">
-            Project overview
+            Message
           </label>
           <textarea
             id={`${formId}-body`}
@@ -249,7 +249,7 @@ export function ContactForm() {
           disabled={isSubmitting || isSuccess}
           className="w-full rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground shadow-[0_0_24px_rgba(37,99,235,0.45)] transition hover:bg-accent-bright disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {isSubmitting ? "Sending…" : isSuccess ? "Message sent" : "Send message"}
+          {isSubmitting ? "Sending…" : isSuccess ? "Message sent" : "Send"}
         </button>
 
         {isSuccess && (

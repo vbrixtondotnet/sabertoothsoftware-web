@@ -65,7 +65,7 @@ export function buildContactEmailContent(
   const companyLine = payload.company || "—";
   const submitted = submittedAt.toISOString();
 
-  const subject = `New Product Inquiry - ${sanitizeSubjectFragment(payload.name)}`;
+  const subject = `Website Inquiry – New Client Lead - ${sanitizeSubjectFragment(payload.name)}`;
 
   const text = [
     `Name: ${payload.name}`,
@@ -81,7 +81,7 @@ export function buildContactEmailContent(
   const html = `<!DOCTYPE html>
 <html lang="en">
 <body style="font-family: system-ui, sans-serif; line-height: 1.5; color: #111;">
-  <h2 style="margin: 0 0 1rem;">New product inquiry</h2>
+  <h2 style="margin: 0 0 1rem;">Website Inquiry – New Client Lead</h2>
   <p><strong>Name:</strong> ${escapeHtml(payload.name)}</p>
   <p><strong>Company:</strong> ${escapeHtml(companyLine)}</p>
   <p><strong>Email:</strong> <a href="mailto:${escapeHtml(payload.email)}">${escapeHtml(payload.email)}</a></p>
