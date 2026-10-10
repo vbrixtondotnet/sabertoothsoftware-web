@@ -5,7 +5,7 @@
  * If unset at runtime, `getContactRecipient` falls back to the form’s work email.
  */
 
-const DEFAULT_FROM_EMAIL = "sales@sabertoothsoftwarelabs.net";
+const DEFAULT_FROM_EMAIL = "marketing@sabertoothsoftwarelabs.net";
 
 /** Sender address for outbound contact / notification mail. */
 export function getFromEmail(): string {

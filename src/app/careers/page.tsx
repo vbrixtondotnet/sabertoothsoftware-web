@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Careers",
   description:
-    "Fifteen remote engineering roles at Sabertooth Software Labs—.NET, TypeScript, React, Angular, and Node.js for US construction and ERP software.",
+    "Twenty remote engineering roles at Sabertooth Software Labs—.NET, TypeScript, React, Supabase, PostgreSQL, and Node.js for US construction and ERP software.",
 };
 
 export default function CareersPage() {

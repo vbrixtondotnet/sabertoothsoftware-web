@@ -95,6 +95,77 @@ export function buildContactEmailContent(
   return { subject, text, html };
 }
 
+export function splitContactName(fullName: string): {
+  firstName: string;
+  lastName: string;
+} {
+  const trimmed = fullName.trim();
+  const space = trimmed.indexOf(" ");
+  if (space === -1) {
+    return { firstName: trimmed, lastName: "" };
+  }
+  return {
+    firstName: trimmed.slice(0, space),
+    lastName: trimmed.slice(space + 1).trim(),
+  };
+}
+
+export const CONTACT_AUTO_REPLY_SUBJECT =
+  "We've Received Your Inquiry | Sabertooth Software Labs";
+
+export function buildContactAutoReplyContent(name: string): {
+  subject: string;
+  text: string;
+  html: string;
+} {
+  const { firstName, lastName } = splitContactName(name);
+  const greetingName = lastName ? `${firstName} ${lastName}` : firstName;
+
+  const text = [
+    `Hi ${greetingName},`,
+    "",
+    "Thank you for contacting Sabertooth Software Labs!",
+    "",
+    "We have successfully received your inquiry, and we appreciate your interest in our software development services.",
+    "",
+    "Our marketing team will review your message and get in touch with you as soon as possible to discuss your requirements and explore how we can help bring your ideas to life.",
+    "",
+    "In the meantime, if you have additional information about your project or business requirements, feel free to reply to this email.",
+    "",
+    "We look forward to connecting with you and exploring the opportunity to work together.",
+    "",
+    "Best regards,",
+    "Sabertooth Software Labs",
+    "Software Development & Technology Solutions",
+    "sabertoothsoftwarelabs.net",
+  ].join("\n");
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<body style="font-family: system-ui, sans-serif; line-height: 1.6; color: #111; max-width: 36rem;">
+  <p>Hi ${escapeHtml(greetingName)},</p>
+  <p>Thank you for contacting <strong>Sabertooth Software Labs</strong>!</p>
+  <p>We have successfully received your inquiry, and we appreciate your interest in our software development services.</p>
+  <p>Our marketing team will review your message and get in touch with you as soon as possible to discuss your requirements and explore how we can help bring your ideas to life.</p>
+  <p>In the meantime, if you have additional information about your project or business requirements, feel free to reply to this email.</p>
+  <p>We look forward to connecting with you and exploring the opportunity to work together.</p>
+  <p>
+    Best regards,<br />
+    <strong>Sabertooth Software Labs</strong><br />
+    Software Development &amp; Technology Solutions<br />
+    <a href="https://sabertoothsoftwarelabs.net">sabertoothsoftwarelabs.net</a>
+  </p>
+</body>
+</html>`;
+
+  return { subject: CONTACT_AUTO_REPLY_SUBJECT, text, html };
+}
+
+export function formatEmailFrom(displayName: string, address: string): string {
+  const email = address.match(/<([^>]+)>/)?.[1]?.trim() ?? address.trim();
+  return `${displayName} <${email}>`;
+}
+
 export async function verifyTurnstile(
   secret: string,
   token: string,

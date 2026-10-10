@@ -1,6 +1,12 @@
 import {
+  MARKETING_FROM_NAME,
+  MARKETING_INBOX,
+} from "../../shared/email-recipients";
+import {
+  buildContactAutoReplyContent,
   buildContactEmailContent,
   CONTACT_LIMITS,
+  formatEmailFrom,
   parseContactPayload,
   verifyTurnstile,
 } from "../lib/contact";
@@ -107,24 +113,9 @@ export async function onRequestPost(context: {
     }
   }
 
-  const fromEmail = env.FROM_EMAIL?.trim();
-  const contactEmail = env.CONTACT_EMAIL?.trim();
-  if (!fromEmail || !contactEmail) {
-    console.error("contact_config_missing", {
-      hasFrom: Boolean(fromEmail),
-      hasContact: Boolean(contactEmail),
-    });
-    const local = isLocalRequest(request);
-    return jsonResponse(
-      {
-        ok: false,
-        error: local
-          ? "Missing FROM_EMAIL or CONTACT_EMAIL in .dev.vars. Add them to .env.local and restart npm run dev."
-          : "Unable to send your message right now. Please try again later.",
-      },
-      503,
-    );
-  }
+  const fromEmail = env.FROM_EMAIL?.trim() || MARKETING_INBOX;
+  const contactEmail = env.CONTACT_EMAIL?.trim() || MARKETING_INBOX;
+  const marketingFrom = formatEmailFrom(MARKETING_FROM_NAME, fromEmail);
 
   const submittedAt = new Date();
   const { subject, text, html } = buildContactEmailContent(payload, submittedAt);
@@ -132,13 +123,35 @@ export async function onRequestPost(context: {
   try {
     const result = await sendContactEmail(env, {
       to: contactEmail,
-      from: fromEmail,
+      from: marketingFrom,
       replyTo: payload.email,
       subject,
       text,
       html,
     });
     console.log("contact_send_accepted", { method: result.method });
+
+    const autoReply = buildContactAutoReplyContent(payload.name);
+    try {
+      const autoResult = await sendContactEmail(env, {
+        to: payload.email,
+        from: marketingFrom,
+        replyTo: MARKETING_INBOX,
+        subject: autoReply.subject,
+        text: autoReply.text,
+        html: autoReply.html,
+      });
+      console.log("contact_auto_reply_accepted", { method: autoResult.method });
+    } catch (autoErr: unknown) {
+      const code =
+        autoErr instanceof ContactEmailSendError
+          ? autoErr.code
+          : autoErr && typeof autoErr === "object" && "code" in autoErr
+            ? String((autoErr as { code: string }).code)
+            : "unknown";
+      console.error("contact_auto_reply_failed", { code });
+    }
+
     return jsonResponse(
       {
         ok: true,

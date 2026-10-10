@@ -16,12 +16,18 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
     default: `${site.name} | Custom Software Development`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
   icons: { icon: "/favicon.svg" },
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    locale: "en_US",
+  },
 };
 
 export default function RootLayout({

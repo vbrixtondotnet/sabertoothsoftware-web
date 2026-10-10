@@ -13,6 +13,7 @@ const devVarsPath = path.join(root, ".dev.vars");
 const KEYS = [
   "FROM_EMAIL",
   "CONTACT_EMAIL",
+  "CAREERS_EMAIL",
   "TURNSTILE_SECRET_KEY",
   "CLOUDFLARE_ACCOUNT_ID",
   "CLOUDFLARE_EMAIL_API_TOKEN",

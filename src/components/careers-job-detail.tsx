@@ -44,6 +44,20 @@ export function CareersJobDetail({ job }: CareersJobDetailProps) {
 
             <section className="mt-10 border-t border-border pt-10">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-cyan">
+                Roles and responsibilities
+              </h2>
+              <ul className="mt-4 space-y-2.5 text-sm text-foreground md:text-base">
+                {job.responsibilities.map((item) => (
+                  <li key={item} className="flex gap-2.5 leading-relaxed">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-bright" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section className="mt-10 border-t border-border pt-10">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-cyan">
                 Qualifications
               </h2>
               <ul className="mt-4 space-y-2.5 text-sm text-foreground md:text-base">

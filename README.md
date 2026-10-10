@@ -18,8 +18,9 @@ The site is a **static export** on **Cloudflare Pages**. Contact email uses a **
 
 | Variable | Local | Production (Pages secrets) |
 | -------- | ----- | -------------------------- |
-| `FROM_EMAIL` | `.env.local` / `.dev.vars` | secret |
-| `CONTACT_EMAIL` | `.env.local` / `.dev.vars` | secret |
+| `FROM_EMAIL` | `marketing@sabertoothsoftwarelabs.net` (Email Sending domain) | secret |
+| `CONTACT_EMAIL` | Contact form → `marketing@sabertoothsoftwarelabs.net` | secret |
+| `CAREERS_EMAIL` | Careers apply → `admin@sabertoothsoftwarelabs.net` | secret |
 | `CLOUDFLARE_ACCOUNT_ID` | `.dev.vars` (via setup) | secret |
 | `CLOUDFLARE_EMAIL_API_TOKEN` | `.dev.vars` (via setup) | secret |
 
@@ -27,7 +28,7 @@ The site is a **static export** on **Cloudflare Pages**. Contact email uses a **
 
 ```bash
 npx wrangler login
-cp .env.example .env.local   # set CONTACT_EMAIL to your Gmail
+cp .env.example .env.local
 npm run setup:email          # writes .dev.vars (uses wrangler session)
 npm run build
 npx wrangler pages secret bulk .dev.vars --project-name=sabertooth-software-labs
@@ -43,9 +44,7 @@ Open [http://localhost:3000/contact](http://localhost:3000/contact). The **`api`
 
 **Production note:** Prefer a **long-lived API token** (Email Sending → Send) in the dashboard over the wrangler OAuth token (expires). Update `.dev.vars` and re-run `wrangler pages secret bulk`.
 
-### Switch recipient to sales@
-
-Update **`CONTACT_EMAIL`** to `sales@sabertoothsoftwarelabs.net` in the Cloudflare Production environment (and in `.dev.vars` if you use it), then redeploy.
+Inboxes are set by `npm run setup:email` (`CONTACT_EMAIL` / `CAREERS_EMAIL`). Re-run **`wrangler pages secret bulk .dev.vars`** after changes, then redeploy.
 
 ## Develop
 

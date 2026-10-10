@@ -1,8 +1,9 @@
 # Copy to `.dev.vars` for `wrangler pages dev` (gitignored).
 # Used by Pages Functions — not read by `next dev` alone.
 
-FROM_EMAIL=sales@sabertoothsoftwarelabs.net
-CONTACT_EMAIL=vbrixtondotnet@gmail.com
+FROM_EMAIL=marketing@sabertoothsoftwarelabs.net
+CONTACT_EMAIL=marketing@sabertoothsoftwarelabs.net
+CAREERS_EMAIL=admin@sabertoothsoftwarelabs.net
 
 # Optional — when set, Turnstile is required on /api/contact
 # TURNSTILE_SECRET_KEY=

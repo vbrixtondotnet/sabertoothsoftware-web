@@ -1,4 +1,11 @@
 import {
+  CAREERS_ADMIN_INBOX,
+  CAREERS_APPLICANT_FROM_NAME,
+  CAREERS_INTERNAL_FROM_NAME,
+} from "../../../shared/email-recipients";
+import { formatEmailFrom } from "../../lib/contact";
+import {
+  buildCareersApplyAutoReplyContent,
   buildCareersApplyEmailContent,
   bytesToBase64,
   CAREERS_APPLY_LIMITS,
@@ -12,7 +19,6 @@ import {
 } from "../../lib/send-contact-email";
 
 interface Env extends ContactMailEnv {
-  FROM_EMAIL: string;
   CAREERS_EMAIL: string;
 }
 
@@ -157,24 +163,12 @@ export async function onRequestPost(context: {
     );
   }
 
-  const fromEmail = env.FROM_EMAIL?.trim();
-  const careersEmail = env.CAREERS_EMAIL?.trim();
-  if (!fromEmail || !careersEmail) {
-    console.error("careers_apply_config_missing", {
-      hasFrom: Boolean(fromEmail),
-      hasCareers: Boolean(careersEmail),
-    });
-    const local = isLocalRequest(request);
-    return jsonResponse(
-      {
-        ok: false,
-        error: local
-          ? "Missing FROM_EMAIL or CAREERS_EMAIL in .dev.vars. Add them to .env.local and restart npm run dev."
-          : "Unable to submit your application right now. Please try again later.",
-      },
-      503,
-    );
-  }
+  const careersEmail = env.CAREERS_EMAIL?.trim() || CAREERS_ADMIN_INBOX;
+  const internalFrom = formatEmailFrom(CAREERS_INTERNAL_FROM_NAME, CAREERS_ADMIN_INBOX);
+  const applicantFrom = formatEmailFrom(
+    CAREERS_APPLICANT_FROM_NAME,
+    CAREERS_ADMIN_INBOX,
+  );
 
   const submittedAt = new Date();
   const { subject, text, html } = buildCareersApplyEmailContent(fields, submittedAt);
@@ -183,7 +177,7 @@ export async function onRequestPost(context: {
   try {
     const result = await sendContactEmail(env, {
       to: careersEmail,
-      from: fromEmail,
+      from: internalFrom,
       replyTo: fields.email,
       subject,
       text,
@@ -198,6 +192,28 @@ export async function onRequestPost(context: {
       ],
     });
     console.log("careers_apply_send_accepted", { method: result.method });
+
+    const autoReply = buildCareersApplyAutoReplyContent(fields);
+    try {
+      const autoResult = await sendContactEmail(env, {
+        to: fields.email,
+        from: applicantFrom,
+        replyTo: CAREERS_ADMIN_INBOX,
+        subject: autoReply.subject,
+        text: autoReply.text,
+        html: autoReply.html,
+      });
+      console.log("careers_apply_auto_reply_accepted", { method: autoResult.method });
+    } catch (autoErr: unknown) {
+      const code =
+        autoErr instanceof ContactEmailSendError
+          ? autoErr.code
+          : autoErr && typeof autoErr === "object" && "code" in autoErr
+            ? String((autoErr as { code: string }).code)
+            : "unknown";
+      console.error("careers_apply_auto_reply_failed", { code });
+    }
+
     return jsonResponse(
       {
         ok: true,

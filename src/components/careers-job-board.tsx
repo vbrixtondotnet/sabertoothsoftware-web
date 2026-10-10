@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { JobListing } from "@/lib/careers";
+import { cn } from "@/lib/utils";
 
 function jobSearchText(job: JobListing): string {
   return [
     job.title,
     ...job.stack,
     ...job.description,
+    ...job.responsibilities,
     ...job.qualifications,
   ]
     .join(" ")
@@ -25,8 +27,8 @@ function matchesQuery(job: JobListing, query: string): boolean {
 const tileButtonClass =
   "mt-3 flex w-full items-center justify-center rounded-lg border border-border bg-surface-muted py-2 text-xs font-semibold text-foreground transition-all hover:border-accent-bright/40 hover:bg-surface-elevated focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
-const INITIAL_ROW_COUNT = 2;
-const ROWS_PER_LOAD = 2;
+const pagerBtnClass =
+  "inline-flex h-9 min-w-9 items-center justify-center rounded-lg border border-border bg-surface-muted text-sm font-semibold text-foreground transition hover:border-accent-bright/40 hover:bg-surface-elevated focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-40";
 
 function gridColumnsForWidth(width: number): number {
   if (width >= 1024) return 4;
@@ -53,7 +55,7 @@ type CareersJobBoardProps = {
 
 export function CareersJobBoard({ jobs }: CareersJobBoardProps) {
   const [query, setQuery] = useState("");
-  const [visibleRows, setVisibleRows] = useState(INITIAL_ROW_COUNT);
+  const [page, setPage] = useState(1);
   const columns = useGridColumns();
 
   const filtered = useMemo(
@@ -61,9 +63,17 @@ export function CareersJobBoard({ jobs }: CareersJobBoardProps) {
     [jobs, query],
   );
 
-  const visibleLimit = columns * visibleRows;
-  const visibleJobs = filtered.slice(0, visibleLimit);
-  const hasMore = visibleLimit < filtered.length;
+  const totalPages =
+    filtered.length === 0 ? 0 : Math.ceil(filtered.length / columns);
+
+  useEffect(() => {
+    if (totalPages === 0) return;
+    setPage((current) => Math.min(current, totalPages));
+  }, [totalPages]);
+
+  const safePage = totalPages === 0 ? 1 : Math.min(page, totalPages);
+  const pageStart = (safePage - 1) * columns;
+  const visibleJobs = filtered.slice(pageStart, pageStart + columns);
 
   return (
     <>
@@ -77,7 +87,7 @@ export function CareersJobBoard({ jobs }: CareersJobBoardProps) {
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
-            setVisibleRows(INITIAL_ROW_COUNT);
+            setPage(1);
           }}
           placeholder="Search by title, technology, or keywords…"
           className="input-dark w-full rounded-lg px-4 py-3 text-sm md:max-w-xl"
@@ -126,16 +136,51 @@ export function CareersJobBoard({ jobs }: CareersJobBoardProps) {
         ))}
       </div>
 
-      {hasMore && (
-        <div className="mt-8 flex justify-center">
+      {totalPages > 1 && (
+        <nav
+          className="mt-8 flex flex-wrap items-center justify-center gap-2"
+          aria-label="Job listings pages"
+        >
           <button
             type="button"
-            onClick={() => setVisibleRows((rows) => rows + ROWS_PER_LOAD)}
-            className="rounded-lg border border-border bg-surface-muted px-6 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-accent-bright/40 hover:bg-surface-elevated focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className={cn(pagerBtnClass, "px-3")}
+            aria-label="Previous page"
+            disabled={safePage <= 1}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
           >
-            View More Jobs
+            ←
           </button>
-        </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-1">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+              <button
+                key={n}
+                type="button"
+                className={cn(
+                  pagerBtnClass,
+                  "min-w-[2.25rem] px-2",
+                  n === safePage &&
+                    "border-accent-bright/50 bg-accent/20 text-accent-bright shadow-[0_0_16px_rgba(37,99,235,0.25)]",
+                )}
+                aria-label={`Page ${n}`}
+                aria-current={n === safePage ? "page" : undefined}
+                onClick={() => setPage(n)}
+              >
+                {n}
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className={cn(pagerBtnClass, "px-3")}
+            aria-label="Next page"
+            disabled={safePage >= totalPages}
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          >
+            →
+          </button>
+        </nav>
       )}
     </>
   );

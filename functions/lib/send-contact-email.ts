@@ -49,6 +49,19 @@ function sanitizeCloudflareErrors(errors: unknown): string[] {
     .slice(0, 3);
 }
 
+function restApiFromField(
+  from: string,
+): string | { address: string; name: string } {
+  const trimmed = from.trim();
+  const named = trimmed.match(/^(.+?)\s*<([^>]+)>$/);
+  if (named) {
+    const name = named[1].trim().replace(/^["']|["']$/g, "");
+    const address = named[2].trim();
+    return name ? { name, address } : address;
+  }
+  return trimmed;
+}
+
 async function sendViaRestApi(
   env: ContactMailEnv,
   message: OutboundContactEmail,
@@ -66,7 +79,7 @@ async function sendViaRestApi(
       },
       body: JSON.stringify({
         to: message.to,
-        from: message.from,
+        from: restApiFromField(message.from),
         reply_to: message.replyTo,
         subject: message.subject,
         html: message.html,

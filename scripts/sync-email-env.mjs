@@ -8,6 +8,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ACCOUNT_ID = "1f44bd2e5ddd226d63c3476956403288";
+const CONTACT_INBOX = "marketing@sabertoothsoftwarelabs.net";
+const CAREERS_INBOX = "admin@sabertoothsoftwarelabs.net";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 function wranglerConfigPath() {
@@ -63,10 +65,9 @@ if (!merged.CLOUDFLARE_EMAIL_API_TOKEN?.trim()) {
   merged.CLOUDFLARE_EMAIL_API_TOKEN = readOAuthToken();
 }
 
-merged.FROM_EMAIL = merged.FROM_EMAIL || "sales@sabertoothsoftwarelabs.net";
-merged.CONTACT_EMAIL = merged.CONTACT_EMAIL || "vbrixtondotnet@gmail.com";
-merged.CAREERS_EMAIL =
-  merged.CAREERS_EMAIL || "hr@sabertoothsoftwarelabs.com";
+merged.FROM_EMAIL = CONTACT_INBOX;
+merged.CONTACT_EMAIL = CONTACT_INBOX;
+merged.CAREERS_EMAIL = CAREERS_INBOX;
 
 const body =
   Object.entries(merged)
@@ -77,9 +78,9 @@ fs.writeFileSync(devVarsPath, body, "utf8");
 
 if (fs.existsSync(localPath)) {
   local.CLOUDFLARE_ACCOUNT_ID = ACCOUNT_ID;
-  if (!local.FROM_EMAIL) local.FROM_EMAIL = merged.FROM_EMAIL;
-  if (!local.CONTACT_EMAIL) local.CONTACT_EMAIL = merged.CONTACT_EMAIL;
-  if (!local.CAREERS_EMAIL) local.CAREERS_EMAIL = merged.CAREERS_EMAIL;
+  local.FROM_EMAIL = CONTACT_INBOX;
+  local.CONTACT_EMAIL = CONTACT_INBOX;
+  local.CAREERS_EMAIL = CAREERS_INBOX;
   const localBody =
     Object.entries(local)
       .filter(([k]) => k !== "CLOUDFLARE_EMAIL_API_TOKEN")
